@@ -1,0 +1,16 @@
+{
+  "name": "Engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run-script build",
+    "build": "node node_modules/webpack/bin/webpack.js src/usage.js output.js --watch"
+  },
+  "author": "Kim Lavoie",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^1.13.1"
+  }
+}
