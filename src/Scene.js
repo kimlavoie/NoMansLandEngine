@@ -2,6 +2,16 @@ module.exports = function(config){
 	var that = this;
 	this.events = [];
 	this.currentEvent = 0;
+	this.stage = new PIXI.Container();
+	this.background = undefined;
+	this.update = function(){
+		if(that.events.length <= that.currentEvent) return false;
+		var nextEvent = that.events[that.currentEvent](that.stage)
+		if(nextEvent){
+			that.currentEvent++;
+		}
+		return true;
+	};
 	this.UI = function(options){};
 	/*
 	{
@@ -11,7 +21,15 @@ module.exports = function(config){
 		}
 	}
 	*/
-	this.background = function(options){};
+	this.background = function(options){
+		var texture = PIXI.Texture.fromImage(options.name);
+		that.events.push(function(stage){
+			stage.removeChild(that.background);
+			that.background = new PIXI.Sprite(texture);
+			stage.addChild(that.background);
+			return false;
+		});
+	};
 	/*
 	{
 			name: "background.jpg",

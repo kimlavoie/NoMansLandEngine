@@ -42,10 +42,12 @@ function scene_features(scene){
 			//user defined
 		}
 	});
+*/
 	scene.background({
-			name: "background.jpg",
+			name: "images/background.jpg",
 			transition: "fade"
 	});
+	/*
 	scene.playMusic({
 		name: "music.mp3",
 		volume: 50,			// between 0 and 100

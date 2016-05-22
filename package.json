@@ -5,12 +5,14 @@
   "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run-script build",
-    "build": "node node_modules/webpack/bin/webpack.js src/usage.js output.js --watch"
+    "serve": "node node_modules/http-server/bin/http-server public -p 3333",
+    "build": "node node_modules/webpack/bin/webpack.js src/usage.js public/output.js --watch"
   },
   "author": "Kim Lavoie",
   "license": "ISC",
   "devDependencies": {
+    "http-server": "^0.9.0",
+    "watch": "^0.18.0",
     "webpack": "^1.13.1"
   }
 }
