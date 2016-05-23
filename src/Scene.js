@@ -317,7 +317,10 @@ function Scene(config){
 			if(previousSprite){
 				that.stage.removeChild(previousSprite); //We need to remove the previous state
 			}
-			var sprite = new PIXI.Sprite(PIXI.loader.resources[texture].texture);
+			var newTexture = PIXI.loader.resources[texture].texture;
+			var sprite = new PIXI.Sprite(newTexture);
+			sprite.x = that.config.renderDimensions.width /2 - newTexture.width /2;
+			sprite.y = that.config.renderDimensions.height /2 - newTexture.height /2;
 			that.characters[options.id] = sprite;
 			that.stage.addChild(sprite);
 			return true;
