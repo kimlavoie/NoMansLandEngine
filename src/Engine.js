@@ -13,12 +13,12 @@ function Engine(){
 	this.start = function(){
 		that.currentScene = new Scene(that.config);
 		that.config.scenes[that.config.firstScene](that.currentScene);
-		that.gameloop();
+		PIXI.loader.load(that.gameloop);
 	};
 	this.gameloop = function(){
 		var shouldContinue = that.currentScene.update();
 		if(shouldContinue){
-			console.log(that.currentScene.stage);
+			//console.log(that.currentScene.stage); //DELETE ME
 			that.renderer.render(that.currentScene.stage);
 			requestAnimationFrame(that.gameloop);
 		}

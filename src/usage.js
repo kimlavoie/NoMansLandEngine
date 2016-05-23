@@ -9,8 +9,8 @@ function init(){
 			phoenix: {
 				name: "Phoenix Wright",
 				sprites: {
-					idle: "phoenix_idle.jpg",		//maybe use patterns as shortcut (e.g.: phoenix_*.jpg)
-					angry: "phoenix_angry.jpg"
+					idle: "images/phoenix_idle.jpg",		//maybe use patterns as shortcut (e.g.: phoenix_*.jpg)
+					angry: "images/phoenix_angry.png"
 					//...
 				},
 				voice: "phoenix.mp3",
@@ -43,36 +43,97 @@ function scene_features(scene){
 		}
 	});
 */
+	// scene.wait({
+	// 	time: "2000" //in millis
+	// });
 	scene.background({
 			name: "images/background.jpg",
 			transition: "fade"
 	});
-	/*
-	scene.playMusic({
-		name: "music.mp3",
-		volume: 50,			// between 0 and 100
-		loop: true,
-		transition: "fade"
-	});
-	scene.stopMusic({
-		transition: "fade"
-	});
-	scene.pauseMusic({
-		transition: "fade"
-	});
-	scene.resumeMusic({
-		transition: "fade"
-	});
-	scene.playSound({
-		name: "sound1.mp3",
-		volume: 100,
-		transition: "instant"
-	});
+	
+	// scene.playMusic({
+	// 	name: "audio/music.mp3",
+	// 	volume: 60,			// between 0 and 100
+	// 	loop: true,
+	// 	transition: "fade"
+	// });
+
+	// scene.wait({
+	// 	time: "10000" //in millis
+	// });
+	
+	// scene.stopMusic({
+	// 	transition: "fade"
+	// });
+	
+	// scene.pauseMusic({
+	// 	transition: "fade"
+	// });
+	// scene.wait({
+	// 	time: "2000" //in millis
+	// });
+	// scene.resumeMusic({
+	// 	transition: "fade"
+	// });
+	
+	// scene.playSound({
+	// 	name: "audio/sound.mp3",
+	// 	volume: 100,
+	// 	transition: "instant"
+	// });
+	
 	scene.addCharacter({
 		id: "phoenix",
 		state: "angry",
 		transition: "instant"
 	});
+
+	scene.setVar({
+		name: "var1",
+		value: 41
+	});
+	scene.setVar({
+		name: "var1",
+		value: (context) => context.var1 + 1
+	});
+	scene.if({
+		condition: (context) => context.var1 === 42,
+		then: function(scene){
+			scene.playMusic({
+				name: "audio/music.mp3",
+				volume: 60,			// between 0 and 100
+				loop: true,
+				transition: "fade"
+			});
+			console.log("playing music");
+		},
+		else: (scene) => scene.stopMusic({
+			transition: "fade"
+		})
+	});
+
+	scene.wait({
+		time: "10000" //in millis
+	});
+
+	scene.setVar({
+		name: "var1",
+		value: (context) => context.var1 + 1
+	});
+	scene.if({
+		condition: (context) => context.var1 === 42,
+		then: (scene) => scene.playMusic({
+			name: "audio/music.mp3",
+			volume: 60,			// between 0 and 100
+			loop: true,
+			transition: "fade"
+		}),
+		else: (scene) => scene.stopMusic({
+			transition: "fade"
+		})
+	});
+
+	/*
 	scene.say({
 		character: "phoenix", 
 		text: "Hello, this is what I have to say...",	//Could be awesome to do some variable interpolation
