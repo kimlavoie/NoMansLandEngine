@@ -183,16 +183,22 @@ function scene_features(scene){
 	// 	newScene: "scene2",
 	// 	transition: "fade"
 	// })
-	scene.playVideo({
-		name: "video/video.mp4",
-		volume: 100,
-		transition: "fade",	
-	});
+	
 
 	scene.addCharacter({
 		id: "phoenix",
 		state: "angry",
 		transition: "instant"
+	});
+
+	scene.waitInput({
+		input: "click" //"any" if it doesn't matter
+	});
+
+	scene.playVideo({
+		name: "video/video.mp4",
+		volume: 100,
+		transition: "fade",	
 	});
 
 	// scene.change({

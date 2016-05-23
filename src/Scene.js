@@ -14,6 +14,112 @@ function Scene(config){
 	this.insertionPoint = 0;
 	this.nextScene = null;
 	this.video = null;
+	this.keyboard = {};
+	this.click = false;
+
+	window.addEventListener('keydown', function (e) {
+        that.keyboard[e.keyCode] = true;
+    });
+    window.addEventListener('keyup', function (e) {
+        that.keyboard[e.keyCode] = false;
+    });
+    window.addEventListener('click', function(e){
+    	that.click = true;
+    });
+
+    var getKeyCode = function(str){
+    	switch(str){
+    		case "0": return 48;
+    		case "1": return 49;
+    		case "2": return 50;
+    		case "3": return 51;
+    		case "4": return 52;
+    		case "5": return 53;
+    		case "6": return 54;
+    		case "7": return 55;
+    		case "8": return 56;
+    		case "9": return 57;
+
+    		case "a": return 65;
+    		case "b": return 66;
+    		case "c": return 67;
+    		case "d": return 68;
+    		case "e": return 69;
+    		case "f": return 70;
+    		case "g": return 71;
+    		case "h": return 72;
+    		case "i": return 73;
+    		case "j": return 74;
+    		case "k": return 75;
+    		case "l": return 76;
+    		case "m": return 77;
+    		case "n": return 78;
+    		case "o": return 79;
+    		case "p": return 80;
+    		case "q": return 81;
+    		case "r": return 82;
+    		case "s": return 83;
+    		case "t": return 84;
+    		case "u": return 85;
+    		case "v": return 86;
+    		case "w": return 87;
+    		case "x": return 88;
+    		case "y": return 89;
+    		case "z": return 90;
+
+    		case "F1": return 112;
+    		case "F2": return 113;
+    		case "F3": return 114;
+    		case "F4": return 115;
+    		case "F5": return 116;
+    		case "F6": return 117;
+    		case "F7": return 118;
+    		case "F8": return 119;
+    		case "F9": return 120;
+    		case "F10": return 121;
+    		case "F11": return 122;
+    		case "F12": return 123;
+
+    		case "space": return 32;
+    		case " ": return 32;
+    		case "enter": return 13;
+    		case "return": return 13
+    		case "shift": return 16;
+    		case "alt": return 18;
+    		case "backspace": return 8;
+    		case "escape": return 27;
+    		case "esc": return 27
+    		case "left": return 37;
+    		case "up": return 38;
+    		case "right": return 39;
+    		case "down": return 40;
+    		case "tab": return 9;
+    		case "caps": return 20;
+    		case "186": return 186;
+    		case "187": return 187;
+    		case "188": return 188;
+    		case "189": return 189;
+    		case "190": return 190;
+    		case "191": return 191;
+    		case "192": return 192;
+    		case "220": return 220;
+    		case "221": return 221;
+    		case "222": return 222;
+    		case "229": return 229;
+    		default: return -1;
+    	}
+    };
+
+    var anyInput = function(){
+    	if(that.click) return true;
+    	var keyboard = that.keyboard;
+    	for(var index in keyboard) { 
+		   if (keyboard.hasOwnProperty(index)) {
+		       if(keyboard[index]) return true;
+		   }
+		}
+		return false;
+    };
 
 	var isFunction = function(functionToCheck) {
 		 var getType = {};
@@ -301,12 +407,29 @@ function Scene(config){
 		that.events.splice(that.insertionPoint, 0, event);
 		that.insertionPoint++;
 	};
-	this.waitInput = function(options){};
-	/*
-	{
-		input: "space" //"any" if it doesn't matter
-	}
-	*/
+	this.waitInput = function(options){
+		/*
+		{
+			input: "space" //"any" if it doesn't matter
+		}
+		*/
+		var event = function(){
+			if(that.waiting
+				&& (that.keyboard[getKeyCode(options.input)]
+				|| (options.input === "any" && anyInput())
+				|| (options.input === "click" && that.click))){
+				that.waiting = false;
+				return true;
+			}
+			else if(!that.waiting){
+				that.waiting = true;
+				that.click = false;
+			}
+			else return false;
+		};
+		that.events.splice(that.insertionPoint, 0, event);
+		that.insertionPoint++;
+	};
 	this.wait = function(options){;
 		/*
 		{
