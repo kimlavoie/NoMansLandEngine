@@ -352,6 +352,17 @@ function Scene(config){
 			speed: 20 	//char per second
 		}
 		*/
+		var event = function(){
+			that.insertionPoint = that.currentEvent + 1;
+			that.waitInput({input:'any'});
+			that.ui.dialogMessage.text = options.text;
+			that.ui.dialogMessage.style.fill = that.config.characters[options.character].color;
+			that.ui.dialogName.text = that.config.characters[options.character].name;
+			that.ui.dialogName.style.fill = that.config.characters[options.character].color;
+			return true;
+		};
+		that.events.splice(that.insertionPoint, 0, event);
+		that.insertionPoint++;
 	};
 	this.choices = function(options){
 		/*

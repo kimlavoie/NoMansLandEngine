@@ -1,6 +1,8 @@
 function Screen(config){
 	var that = this;
 	this.container = new PIXI.Container();
+	this.dialogMessage = null;
+	this.dialogName = null;
 
 	this.image = function(options){
 		/*
@@ -105,6 +107,7 @@ function Screen(config){
 		newText.x = options.position.x;
 		newText.y = options.position.y;
 		that.container.addChild(newText);
+		return newText;
 	};
 
 	this.rectangle = function(options){		//screen.ellipse works exactly the same way
@@ -226,7 +229,7 @@ function Screen(config){
 			},
 			lineWidth: 4,
 			lineAlpha: 1,
-			fillAlpha: 0.5,
+			fillAlpha: 0.8,
 			fillColor: 0x0000FF,
 			lineColor: 0x5555FF,
 			radius: 15
@@ -243,14 +246,14 @@ function Screen(config){
 			},
 			lineWidth: 4,
 			lineAlpha: 1,
-			fillAlpha: 0.5,
+			fillAlpha: 0.8,
 			fillColor: 0x0000FF,
 			lineColor: 0x5555FF,
 			radius: 15
 		});
-		that.text({
+		that.dialogMessage = that.text({
 				id: "dialogBoxText1",
-				text: "Hello the world! I'm really enjoying all this, so please, come see me to say hello to me, thank you!",
+				text: "",
 				position: {
 					x: 15,
 					y: 350
@@ -258,34 +261,20 @@ function Screen(config){
 				font: {
 					font : '25px Arial',
 					fill : '#F7EDCA',
-					stroke : '#4a1850',
-					strokeThickness : 1,
-					dropShadow : false,
-					dropShadowColor : '#000000',
-					dropShadowAngle : Math.PI / 6,
-					dropShadowDistance : 6,
 					wordWrap : true,
 					wordWrapWidth : 610
 				}
 		});
-		that.text({
+		that.dialogName = that.text({
 			id: "dialogBoxText1",
-				text: "Phoenix",
+				text: "",
 				position: {
-					x: 30,
+					x: 15,
 					y: 305
 				},
 				font: {
 					font : '25px Arial',
-					fill : '#F7EDCA',
-					stroke : '#4a1850',
-					strokeThickness : 1,
-					dropShadow : false,
-					dropShadowColor : '#000000',
-					dropShadowAngle : Math.PI / 6,
-					dropShadowDistance : 6,
-					wordWrap : true,
-					wordWrapWidth : 610
+					fill : '#F7EDCA'
 				}
 		})
 	};

@@ -14,7 +14,12 @@ function init(){
 					//...
 				},
 				voice: "phoenix.mp3",
-				color: "blue" //or hex value (#0000ff)
+				color: "#AAAAFF" //or hex value (#0000ff)
+			},
+			narrator: {
+				name: "",
+				voice: "narrator.mp3",
+				color: "#FFFFFF"
 			}
 			//...
 		},
@@ -139,11 +144,21 @@ function scene_features(scene){
 	// 	})
 	// });
 
-	// scene.say({
-	// 	character: "phoenix", 
-	// 	text: "Hello, this is what I have to say...",	//Could be awesome to do some variable interpolation
-	// 	speed: 20 	//char per second
-	// });
+	scene.say({
+		character: "phoenix", 
+		text: "Hello, this is what I have to say...",	//Could be awesome to do some variable interpolation
+		speed: 20 	//char per second
+	});
+	scene.say({
+		character: "phoenix", 
+		text: "FUCK YALL!",	//Could be awesome to do some variable interpolation
+		speed: 20 	//char per second
+	});
+	scene.say({
+		character: "narrator",
+		text: "And then he was assaulted and died. THE END!!!!",
+		speed: 20
+	});
 	// scene.choices([
 	// 	{
 	// 		text: "First choice",
