@@ -1,6 +1,7 @@
 function Screen(config){
 	var that = this;
 	this.container = new PIXI.Container();
+	this.config = config;
 	this.dialogMessage = null;
 	this.dialogName = null;
 
@@ -221,10 +222,10 @@ function Screen(config){
 			id: "dialogBoxRect1",
 			position: {
 				x: 5,
-				y: 345
+				y: that.config.renderDimensions.height-135
 			},
 			dimensions: {
-				width: 630,
+				width: that.config.renderDimensions.width-10,
 				height: 130
 			},
 			lineWidth: 4,
@@ -238,7 +239,7 @@ function Screen(config){
 			id: "dialogBoxRect2",
 			position: {
 				x: 5,
-				y: 295
+				y: that.config.renderDimensions.height-185
 			},
 			dimensions: {
 				width: 200,
@@ -256,7 +257,7 @@ function Screen(config){
 				text: "",
 				position: {
 					x: 15,
-					y: 350
+					y: this.config.renderDimensions.height-130
 				},
 				font: {
 					font : '25px Arial',
@@ -270,7 +271,7 @@ function Screen(config){
 				text: "",
 				position: {
 					x: 15,
-					y: 305
+					y: this.config.renderDimensions.height-175
 				},
 				font: {
 					font : '25px Arial',

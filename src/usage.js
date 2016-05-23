@@ -33,6 +33,10 @@ function init(){
 			inventory: inventory
 			//...
 		},
+		renderDimensions: {
+			width: 800,
+			height: 600
+		},
 		firstScene: "intro"
 	});
 	engine.start();
@@ -154,11 +158,15 @@ function scene_features(scene){
 		text: "FUCK YALL!",	//Could be awesome to do some variable interpolation
 		speed: 20 	//char per second
 	});
+	scene.removeCharacter({
+		id: "phoenix"
+	});
 	scene.say({
 		character: "narrator",
 		text: "And then he was assaulted and died. THE END!!!!",
 		speed: 20
 	});
+	
 	// scene.choices([
 	// 	{
 	// 		text: "First choice",
