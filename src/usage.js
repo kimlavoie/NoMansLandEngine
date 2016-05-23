@@ -35,14 +35,19 @@ function init(){
 
 
 function scene_features(scene){
-	/*
+	scene.addCharacter({
+		id: "phoenix",
+		state: "angry",
+		transition: "instant"
+	});
+
 	scene.UI({
 		ui: "normal",
 		options: {
 			//user defined
 		}
 	});
-*/
+
 	// scene.wait({
 	// 	time: "2000" //in millis
 	// });
@@ -82,11 +87,7 @@ function scene_features(scene){
 	// 	transition: "instant"
 	// });
 	
-	// scene.addCharacter({
-	// 	id: "phoenix",
-	// 	state: "angry",
-	// 	transition: "instant"
-	// });
+	
 
 	// scene.setVar({
 	// 	name: "var1",
@@ -185,21 +186,21 @@ function scene_features(scene){
 	// })
 	
 
-	scene.addCharacter({
-		id: "phoenix",
-		state: "angry",
-		transition: "instant"
-	});
+	// scene.addCharacter({
+	// 	id: "phoenix",
+	// 	state: "angry",
+	// 	transition: "instant"
+	// });
 
-	scene.waitInput({
-		input: "click" //"any" if it doesn't matter
-	});
+	// scene.waitInput({
+	// 	input: "click" //"any" if it doesn't matter
+	// });
 
-	scene.playVideo({
-		name: "video/video.mp4",
-		volume: 100,
-		transition: "fade",	
-	});
+	// scene.playVideo({
+	// 	name: "video/video.mp4",
+	// 	volume: 100,
+	// 	transition: "fade",	
+	// });
 
 	// scene.change({
 	// 	newScene: "scene2",
@@ -238,87 +239,114 @@ function scene3(scene){
 }
 
 function primitives(screen, options){
-	/*
-	screen.image({								//used for both buttons and static pictures
-		id: "button1",
-		position: {
-			x: 0,
-			y: 0
-		},
-		states: {
-			idle: "idle_button.jpg",			//maybe use patterns (e.g.: "*_button.jpg")
-			inactive: "inactive_button.jpg",
-			hovered: "hovered_button.jpg",
-			clicked: "clicked_button.jpg"
-		},
-		hotspots: [
-			{
-				position: {
-					x: 0,
-					y, 0
-				},
-				dimensions: {
-					width: 100,
-					height: 100
-				},
-				action: function(){
-					screen.setVar({
-						name: "another_var",
-						value: (context) => context.another_var + 1
-					});
-					screen.push({
-						newScreen: "inventory",
-						options: {}
-						transition: "instant"
-					});
-				}
-			}
-			//...
-		]
-	});
-	screen.text({
-		id: "text1",
-		text: "Hello the world!",
-		position: {
-			x: 0,
-			y: 0
-		},
-		font: {
-			family: "arial",
-			size: 24,
-			color: "blue",
-			modifiers: ["bold", "italic", "underlined", "striked"]
-		}
-	});
-	screen.rectangle({		//screen.ellipse works exactly the same way
-		id: "rect1",
-		position: {
-			x: 0,
-			y: 0
-		},
-		dimensions: {
-			width: 100,
-			heigh: 100
-		},
-		fillColor: "blue",	//undefined if not filled
-		strokeColor: "red"	//undefined if no stroke line
+	
+	// screen.image({								//used for both buttons and static pictures
+	// 	id: "button1",
+	// 	position: {
+	// 		x: 100,
+	// 		y: 0
+	// 	},
+	// 	states: {
+	// 		idle: "images/idle_button.png",			//maybe use patterns (e.g.: "*_button.jpg")
+	// 		inactive: "images/inactive_button.png",
+	// 		hovered: "images/hovered_button.png",
+	// 		clicked: "images/clicked_button.png"
+	// 	},
+	// 	action: function(){
+	// 		console.log("clicked");
+	// 	}
+	// 	// hotspots: [
+	// 	// 	{
+	// 	// 		position: {
+	// 	// 			x: 0,
+	// 	// 			y, 0
+	// 	// 		},
+	// 	// 		dimensions: {
+	// 	// 			width: 100,
+	// 	// 			height: 100
+	// 	// 		},
+	// 	// 		action: function(){
+	// 	// 			screen.setVar({
+	// 	// 				name: "another_var",
+	// 	// 				value: (context) => context.another_var + 1
+	// 	// 			});
+	// 	// 			screen.push({
+	// 	// 				newScreen: "inventory",
+	// 	// 				options: {}
+	// 	// 				transition: "instant"
+	// 	// 			});
+	// 	// 		}
+	// 	// 	}
+	// 	// 	//...
+	// 	// ]
+	// });
 
-	});
-	screen.shape({
-		id: "triangle1",
-		position: {			//translation of the shape
-			x: 0,
-			y: 0
-		},
-		points: [			//from x:0, y:0
-			{x:5, y:0},
-			{x:0, y: 10},
-			{x:10, y:10}
-		],
-		fillColor: "blue",	//undefined if not filled
-		strokeColor: "red"	//undefined if no stroke line
-	});
-*/
+	screen.dialogBox();
+
+	// screen.text({
+	// 	id: "text1",
+	// 	text: "Hello the world!",
+	// 	position: {
+	// 		x: 200,
+	// 		y: 200
+	// 	},
+	// 	font: {
+	// 		font : 'bold italic 36px Arial',
+	// 	    fill : '#F7EDCA',
+	// 	    stroke : '#4a1850',
+	// 	    strokeThickness : 5,
+	// 	    dropShadow : true,
+	// 	    dropShadowColor : '#000000',
+	// 	    dropShadowAngle : Math.PI / 6,
+	// 	    dropShadowDistance : 6,
+	// 	    wordWrap : true,
+	// 	    wordWrapWidth : 440
+	// 	}
+	// });
+
+	// screen.rectangle({
+	// 	id: "rect1",
+	// 	position: {
+	// 		x: 300,
+	// 		y: 300
+	// 	},
+	// 	dimensions: {
+	// 		width: 100,
+	// 		height: 100
+	// 	}
+	// });
+
+	// screen.ellipse({
+	// 	id: "ellipse1",
+	// 	position: {
+	// 		x: 400,
+	// 		y: 0
+	// 	},
+	// 	dimensions: {
+	// 		width: 200,
+	// 		height: 100
+	// 	}
+	// });
+
+	// screen.shape({
+	// 		id: "triangle1",
+	// 		position: {			//translation of the shape
+	// 			x: 0,
+	// 			y: 300
+	// 		},
+	// 		points: [			//from x:0, y:0
+	// 			{x:50, y:0},
+	// 			{x:150,y: 0},
+	// 			{x:100, y:100},
+	// 			{x:0, y: 100}
+	// 		],
+	// 		lineWidth: 4,
+	// 		lineAlpha: 1,
+	// 		fillAlpha: 0.5,
+	// 		fillColor: 0x0000FF,
+	// 		lineColor: 0xFF0000
+	// 	});
+
 };
 
 function inventory(screen, options){

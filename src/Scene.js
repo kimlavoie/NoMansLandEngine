@@ -1,3 +1,5 @@
+var Screen = require('./Screen');
+
 function Scene(config){
 	var that = this;
 	this.events = [];
@@ -16,6 +18,7 @@ function Scene(config){
 	this.video = null;
 	this.keyboard = {};
 	this.click = false;
+	this.ui = null;
 
 	window.addEventListener('keydown', function (e) {
         that.keyboard[e.keyCode] = true;
@@ -164,15 +167,26 @@ function Scene(config){
 		return true;
 	};
 
-	this.UI = function(options){};
-	/*
-	{
-		ui: "normal",
-		options: {
-			//user defined
+	this.UI = function(options){
+		/*
+		{
+			ui: "normal",
+			options: {
+				//user defined
+			}
 		}
-	}
-	*/
+		*/
+		var event = function(){
+			var newScreen = new Screen(that.config);
+			that.ui = newScreen;
+			var init = that.config.uis[options.ui];
+			init(newScreen, options.options);
+			that.stage.addChild(newScreen.container);
+			return true;
+		};
+		that.events.splice(that.insertionPoint, 0, event);
+		that.insertionPoint++;
+	};
 	this.background = function(options){
 		/*
 		{
@@ -339,16 +353,17 @@ function Scene(config){
 		}
 		*/
 	};
-	this.choices = function(options){};
-	/*
-	[
-		{
-			text: "First choice",
-			action: (scene) => //do something
-		}
-		//{...}
-	]
-	*/
+	this.choices = function(options){
+		/*
+		[
+			{
+				text: "First choice",
+				action: (scene) => //do something
+			}
+			//{...}
+		]
+		*/
+	};
 	this.setVar = function(options){
 		/*
 		{
@@ -453,13 +468,14 @@ function Scene(config){
 		that.events.splice(that.insertionPoint, 0, event);
 		that.insertionPoint++;
 	}
-	this.push = function(options){};
-	/*
-	{
-		newScene: "scene2",
-		transition: "fade"
-	}
-	*/
+	this.push = function(options){
+		/*
+		{
+			newScene: "scene2",
+			transition: "fade"
+		}
+		*/
+	};
 	this.playVideo = function(options){
 		/*
 		{

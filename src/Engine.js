@@ -17,7 +17,7 @@ function Engine(){
 	};
 	this.gameloop = function(){
 		var shouldContinue = that.currentScene.update();
-		if(shouldContinue){
+		// if(shouldContinue){
 			if(that.currentScene.nextScene){
 				var nextScene = that.currentScene.nextScene;
 				that.currentScene = new Scene(that.config);
@@ -28,10 +28,10 @@ function Engine(){
 				that.renderer.render(that.currentScene.stage);
 				requestAnimationFrame(that.gameloop);
 			}
-		}
-		else{
-			console.log("Exiting game loop");
-		}
+		// }
+		// else{
+		// 	console.log("Exiting game loop");
+		// }
 	};
 }
 module.exports = Engine;
