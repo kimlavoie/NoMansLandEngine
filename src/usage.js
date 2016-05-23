@@ -46,10 +46,10 @@ function scene_features(scene){
 	// scene.wait({
 	// 	time: "2000" //in millis
 	// });
-	scene.background({
-			name: "images/background.jpg",
-			transition: "fade"
-	});
+	// scene.background({
+	// 		name: "images/background.jpg",
+	// 		transition: "fade"
+	// });
 	
 	// scene.playMusic({
 	// 	name: "audio/music.mp3",
@@ -82,108 +82,125 @@ function scene_features(scene){
 	// 	transition: "instant"
 	// });
 	
+	// scene.addCharacter({
+	// 	id: "phoenix",
+	// 	state: "angry",
+	// 	transition: "instant"
+	// });
+
+	// scene.setVar({
+	// 	name: "var1",
+	// 	value: 41
+	// });
+	// scene.setVar({
+	// 	name: "var1",
+	// 	value: (context) => context.var1 + 1
+	// });
+	// scene.if({
+	// 	condition: (context) => context.var1 === 42,
+	// 	then: function(scene){
+	// 		scene.playMusic({
+	// 			name: "audio/music.mp3",
+	// 			volume: 60,			// between 0 and 100
+	// 			loop: true,
+	// 			transition: "fade"
+	// 		});
+	// 		console.log("playing music");
+	// 	},
+	// 	else: (scene) => scene.stopMusic({
+	// 		transition: "fade"
+	// 	})
+	// });
+
+	// scene.wait({
+	// 	time: "2000" //in millis
+	// });
+
+	// scene.removeCharacter({
+	// 	id: "phoenix",
+	// 	transition: "fade"
+	// });
+
+	// scene.setVar({
+	// 	name: "var1",
+	// 	value: (context) => context.var1 + 1
+	// });
+	// scene.if({
+	// 	condition: (context) => context.var1 === 42,
+	// 	then: (scene) => scene.playMusic({
+	// 		name: "audio/music.mp3",
+	// 		volume: 60,			// between 0 and 100
+	// 		loop: true,
+	// 		transition: "fade"
+	// 	}),
+	// 	else: (scene) => scene.stopMusic({
+	// 		transition: "fade"
+	// 	})
+	// });
+
+	// scene.say({
+	// 	character: "phoenix", 
+	// 	text: "Hello, this is what I have to say...",	//Could be awesome to do some variable interpolation
+	// 	speed: 20 	//char per second
+	// });
+	// scene.choices([
+	// 	{
+	// 		text: "First choice",
+	// 		action: (scene) => //do something
+	// 	}
+	// 	//{...}
+	// ]);
+	// scene.setVar({
+	// 	name: "var1",
+	// 	value: 2
+	// });
+	// scene.setVar({
+	// 	name: "var1",
+	// 	value: (context) => context.var1 + 1
+	// });
+	// scene.if({
+	// 	condition: (context) => context.var1 == 3,
+	// 	then: (scene) => //do something,
+	// 	else: (scene) -> //do something else
+	// });
+	// scene.while({
+	// 	condition: (context) => context.var1 < 10,
+	// 	do: function(scene){ //do somethings
+	// 		console.log("looping!");
+	// 		scene.setVar({
+	// 			name: "var1",
+	// 			value: (context) => context.var1 + 1
+	// 		})
+	// 	}
+	// });
+	// scene.waitInput({
+	// 	input: "space" //"any" if it doesn't matter
+	// });
+	// scene.wait({
+	// 	time: "2000" //in millis
+	// });
+	// scene.push({
+	// 	newScene: "scene2",
+	// 	transition: "fade"
+	// })
+	scene.playVideo({
+		name: "video/video.mp4",
+		volume: 100,
+		transition: "fade",	
+	});
+
 	scene.addCharacter({
 		id: "phoenix",
 		state: "angry",
 		transition: "instant"
 	});
 
-	scene.setVar({
-		name: "var1",
-		value: 41
-	});
-	scene.setVar({
-		name: "var1",
-		value: (context) => context.var1 + 1
-	});
-	scene.if({
-		condition: (context) => context.var1 === 42,
-		then: function(scene){
-			scene.playMusic({
-				name: "audio/music.mp3",
-				volume: 60,			// between 0 and 100
-				loop: true,
-				transition: "fade"
-			});
-			console.log("playing music");
-		},
-		else: (scene) => scene.stopMusic({
-			transition: "fade"
-		})
-	});
+	// scene.change({
+	// 	newScene: "scene2",
+	// 	transition: "fade",
+	// 	clear: true		//to clear or not the previous scene (start from scratch or continue with previous scene's state?)
+	// });
 
-	scene.wait({
-		time: "10000" //in millis
-	});
-
-	scene.setVar({
-		name: "var1",
-		value: (context) => context.var1 + 1
-	});
-	scene.if({
-		condition: (context) => context.var1 === 42,
-		then: (scene) => scene.playMusic({
-			name: "audio/music.mp3",
-			volume: 60,			// between 0 and 100
-			loop: true,
-			transition: "fade"
-		}),
-		else: (scene) => scene.stopMusic({
-			transition: "fade"
-		})
-	});
-
-	/*
-	scene.say({
-		character: "phoenix", 
-		text: "Hello, this is what I have to say...",	//Could be awesome to do some variable interpolation
-		speed: 20 	//char per second
-	});
-	scene.choices([
-		{
-			text: "First choice",
-			action: (scene) => //do something
-		}
-		//{...}
-	]);
-	scene.setVar({
-		name: "var1",
-		value: 2
-	});
-	scene.setVar({
-		name: "var1",
-		value: (context) => context.var1 + 1
-	});
-	scene.if({
-		condition: (context) => context.var1 == 3,
-		then: (scene) => //do something,
-		else: (scene) -> //do something else
-	});
-	scene.while({
-		condition: (context) => context.var1 < 10,
-		do: (scene) => //do somethings
-	});
-	scene.waitInput({
-		input: "space" //"any" if it doesn't matter
-	});
-	scene.wait({
-		time: "2000" //in millis
-	});
-	scene.push({
-		newScene: "scene2",
-		transition: "fade"
-	})
-	scene.playVideo({
-		name: "video.mp4",
-		volume: 100
-		transition: "fade",	
-	});
-	scene.change({
-		newScene: "scene3",
-		transition: "fade",
-		clear: true		//to clear or not the previous scene (start from scratch or continue with previous scene's state?)
-	});
-*/
 }
 
 function scene2(scene){
@@ -197,6 +214,11 @@ function scene2(scene){
 		transition: "instant"
 	};
 	*/
+	console.log("in scene2");
+	scene.background({
+			name: "images/background2.jpg",
+			transition: "fade"
+	});
 }
 
 function scene3(scene){

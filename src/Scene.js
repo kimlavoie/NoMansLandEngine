@@ -3,8 +3,8 @@ function Scene(config){
 	this.events = [];
 	this.currentEvent = 0;
 	this.stage = new PIXI.Container();
-	this.background = undefined;
-	this.music = undefined;
+	this.background = null;
+	this.music = null;
 	this.sounds = {};
 	this.waiting = false;
 	this.finishedWaiting = false;
@@ -12,6 +12,8 @@ function Scene(config){
 	this.config = config;
 	this.context = {};
 	this.insertionPoint = 0;
+	this.nextScene = null;
+	this.video = null;
 
 	var isFunction = function(functionToCheck) {
 		 var getType = {};
@@ -190,19 +192,38 @@ function Scene(config){
 		//TODO: position correctly
 		var texture = that.config.characters[options.id].sprites[options.state];
 		PIXI.loader.add(texture);
-		var event = function(stage){
+		var event = function(){
 			var previousSprite = that.characters[options.id];
 			if(previousSprite){
-				stage.removeChild(previousSprite); //We need to remove the previous state
+				that.stage.removeChild(previousSprite); //We need to remove the previous state
 			}
 			var sprite = new PIXI.Sprite(PIXI.loader.resources[texture].texture);
-			stage.addChild(sprite);
+			that.characters[options.id] = sprite;
+			that.stage.addChild(sprite);
 			return true;
 		};
 
 		that.events.splice(that.insertionPoint, 0, event);
 		that.insertionPoint++;
 	};
+	this.removeCharacter = function(options){
+		/*
+		{
+			id: "phoenix",
+			transition: "fade"
+		}
+		*/
+		var event = function(){
+			var previousSprite = that.characters[options.id];
+			if(previousSprite){
+				that.stage.removeChild(previousSprite); //We need to remove the previous state
+			}
+			return true;
+		};
+		that.events.splice(that.insertionPoint, 0, event);
+		that.insertionPoint++;
+	};
+
 	this.say = function(options){
 		/*
 		{
@@ -316,21 +337,51 @@ function Scene(config){
 		transition: "fade"
 	}
 	*/
-	this.playVideo = function(options){};
-	/*
-	{
-		name: "video.mp4",
-		volume: 100
-		transition: "fade",	
+	this.playVideo = function(options){
+		/*
+		{
+			name: "video.mp4",
+			volume: 100
+			transition: "fade",	
+		}
+		*/
+		var texture = options.name;
+		PIXI.loader.add(texture);
+		var event = function(){
+			if(that.video){
+				var source = that.video.texture.baseTexture.source;
+				if(source.ended){
+					that.stage.removeChild(that.video);
+					return true;
+				}
+			}
+			else{
+				var videoTexture = PIXI.Texture.fromVideo(options.name);
+				that.video = new PIXI.Sprite(videoTexture);
+				that.video.width = 640;
+				that.video.height = 480;
+				that.stage.addChild(that.video);
+			}
+			return false;
+		};
+
+		that.events.splice(that.insertionPoint, 0, event);
+		that.insertionPoint++;
 	}
-	*/
-	this.change = function(options){};
-	/*
-	{
-		newScene: "scene3",
-		transition: "fade",
-		clear: true		//to clear or not the previous scene (start from scratch or continue with previous scene's state?)
-	}
-	*/
+	this.change = function(options){
+		/*
+		{
+			newScene: "scene3",
+			transition: "fade",
+			clear: true		//to clear or not the previous scene (start from scratch or continue with previous scene's state?)
+		}
+		*/
+		//TODO: transitions and clear
+		var event = function(){
+			that.nextScene = options.newScene;
+		};
+		that.events.splice(that.insertionPoint, 0, event);
+		that.insertionPoint++;
+	};
 };
 module.exports = Scene;

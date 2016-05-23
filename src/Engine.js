@@ -18,9 +18,16 @@ function Engine(){
 	this.gameloop = function(){
 		var shouldContinue = that.currentScene.update();
 		if(shouldContinue){
-			//console.log(that.currentScene.stage); //DELETE ME
-			that.renderer.render(that.currentScene.stage);
-			requestAnimationFrame(that.gameloop);
+			if(that.currentScene.nextScene){
+				var nextScene = that.currentScene.nextScene;
+				that.currentScene = new Scene(that.config);
+				that.config.scenes[nextScene](that.currentScene);
+				PIXI.loader.load(that.gameloop);
+			}
+			else{
+				that.renderer.render(that.currentScene.stage);
+				requestAnimationFrame(that.gameloop);
+			}
 		}
 		else{
 			console.log("Exiting game loop");
