@@ -148,6 +148,13 @@ function scene_features(scene){
 	// 	})
 	// });
 
+	scene.playMusic({
+		name: "audio/music.mp3",
+		volume: 60,			// between 0 and 100
+		loop: true,
+		transition: "fade"
+	});
+
 	scene.say({
 		character: "phoenix", 
 		text: "Hello, this is what I have to say...",	//Could be awesome to do some variable interpolation
@@ -225,11 +232,11 @@ function scene_features(scene){
 	// 	transition: "fade",	
 	// });
 
-	// scene.change({
-	// 	newScene: "scene2",
-	// 	transition: "fade",
-	// 	clear: true		//to clear or not the previous scene (start from scratch or continue with previous scene's state?)
-	// });
+	scene.change({
+		newScene: "scene2",
+		transition: "fade",
+		clear: true		//to clear or not the previous scene (start from scratch or continue with previous scene's state?)
+	});
 
 }
 

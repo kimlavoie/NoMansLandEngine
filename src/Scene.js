@@ -30,6 +30,11 @@ function Scene(config){
     	that.click = true;
     });
 
+    var insertEvent = function(event){
+    	that.events.splice(that.insertionPoint, 0, event);
+		that.insertionPoint++;
+    };
+
     var getKeyCode = function(str){
     	switch(str){
     		case "0": return 48;
@@ -176,16 +181,14 @@ function Scene(config){
 			}
 		}
 		*/
-		var event = function(){
+		insertEvent(function(){
 			var newScreen = new Screen(that.config);
 			that.ui = newScreen;
 			var init = that.config.uis[options.ui];
 			init(newScreen, options.options);
 			that.stage.addChild(newScreen.container);
 			return true;
-		};
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	this.background = function(options){
 		/*
@@ -196,14 +199,12 @@ function Scene(config){
 		*/
 		//TODO: transitions
 		PIXI.loader.add(options.name);
-		var event = function(stage){
+		insertEvent(function(stage){
 			stage.removeChild(that.background);
 			that.background = new PIXI.Sprite(PIXI.loader.resources[options.name].texture);
 			stage.addChild(that.background);
 			return true;
-		};
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	
 	this.playMusic = function(options){
@@ -217,7 +218,7 @@ function Scene(config){
 		*/
 		//TODO: transitions
 		if(!that.sounds[options.name]) that.sounds[options.name] = new sound(options.name);
-		var event = function(){
+		insertEvent(function(){
 			if(that.music){
 				that.music.pause();
 				that.music.currentTime = 0;
@@ -228,10 +229,7 @@ function Scene(config){
 			audio.loop(options.loop);
 			audio.play();
 			return true;
-		};
-
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	
 	this.stopMusic = function(options){
@@ -241,13 +239,10 @@ function Scene(config){
 		}
 		*/
 		//TODO: transitions
-		var event = function(){
+		insertEvent(function(){
 			that.music.stop();
 			return true;
-		};
-
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 
 	this.pauseMusic = function(options){
@@ -257,13 +252,10 @@ function Scene(config){
 		}
 		*/
 		//TODO: transitions
-		var event = function(){
+		insertEvent(function(){
 			that.music.pause();
 			return true;
-		};
-
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	this.resumeMusic = function(options){
 		/*
@@ -272,13 +264,10 @@ function Scene(config){
 		}
 		*/
 		//TODO: transitions
-		var event = function(){
+		insertEvent(function(){
 			that.music.resume();
 			return true;
-		};
-
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	this.playSound = function(options){
 		/*
@@ -290,15 +279,12 @@ function Scene(config){
 		*/
 		//TODO: transitions
 		if(!that.sounds[options.name]) that.sounds[options.name] = new sound(options.name);
-		var event = function(){
+		insertEvent(function(){
 			var audio = that.sounds[options.name];
 			audio.volume(options.volume);
 			audio.play();
 			return true;
-		};
-
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	this.addCharacter = function(options){
 		/*
@@ -311,8 +297,8 @@ function Scene(config){
 		//TODO: transitions
 		//TODO: position correctly
 		var texture = that.config.characters[options.id].sprites[options.state];
-		PIXI.loader.add(texture);
-		var event = function(){
+		PIXI.loader.resources[texture] || PIXI.loader.add(texture);
+		insertEvent(function(){
 			var previousSprite = that.characters[options.id];
 			if(previousSprite){
 				that.stage.removeChild(previousSprite); //We need to remove the previous state
@@ -324,10 +310,7 @@ function Scene(config){
 			that.characters[options.id] = sprite;
 			that.stage.addChild(sprite);
 			return true;
-		};
-
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	this.removeCharacter = function(options){
 		/*
@@ -336,15 +319,13 @@ function Scene(config){
 			transition: "fade"
 		}
 		*/
-		var event = function(){
+		insertEvent(function(){
 			var previousSprite = that.characters[options.id];
 			if(previousSprite){
 				that.stage.removeChild(previousSprite); //We need to remove the previous state
 			}
 			return true;
-		};
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 
 	this.say = function(options){
@@ -355,7 +336,7 @@ function Scene(config){
 			speed: 20 	//char per second
 		}
 		*/
-		var event = function(){
+		insertEvent(function(){
 			that.insertionPoint = that.currentEvent + 1;
 			that.waitInput({input:'any'});
 			that.ui.dialogMessage.text = options.text;
@@ -363,9 +344,7 @@ function Scene(config){
 			that.ui.dialogName.text = that.config.characters[options.character].name;
 			that.ui.dialogName.style.fill = that.config.characters[options.character].color;
 			return true;
-		};
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	this.choices = function(options){
 		/*
@@ -389,14 +368,11 @@ function Scene(config){
 			value: (context) => context.var1 + 1
 		}
 		*/
-		var event = function(){
+		insertEvent(function(){
 			if(isFunction(options.value)) that.context[options.name] = options.value(that.context);
 			else that.context[options.name] = options.value;
 			return true;
-		};
-
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 		
 	};
 	this.if = function(options){
@@ -407,15 +383,12 @@ function Scene(config){
 			else: (scene) -> //do something else
 		}
 		*/
-		var event = function(){
+		insertEvent(function(){
 			that.insertionPoint = that.currentEvent + 1;
 			if(options.condition(that.context)) options.then(that);
 			else options.else(that);
 			return true;
-		};
-
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	this.while = function(options){
 		/*
@@ -424,17 +397,14 @@ function Scene(config){
 			do: (scene) => //do somethings
 		}
 		*/
-		var event = function(){
+		insertEvent(function(){
 			if(options.condition(that.context)){
 				that.insertionPoint = that.currentEvent + 1;
 				options.do(that);
 				that.while(options);
 			}
 			return true;
-		};
-
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	this.waitInput = function(options){
 		/*
@@ -442,7 +412,7 @@ function Scene(config){
 			input: "space" //"any" if it doesn't matter
 		}
 		*/
-		var event = function(){
+		insertEvent(function(){
 			if(that.waiting
 				&& (that.keyboard[getKeyCode(options.input)]
 				|| (options.input === "any" && anyInput())
@@ -455,9 +425,7 @@ function Scene(config){
 				that.click = false;
 			}
 			else return false;
-		};
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 	this.wait = function(options){;
 		/*
@@ -465,7 +433,7 @@ function Scene(config){
 			time: "2000" //in millis
 		}
 		*/
-		var event = function(){
+		insertEvent(function(){
 			if(!that.waiting){
 				that.waiting = true;
 				setTimeout(function(){
@@ -478,9 +446,7 @@ function Scene(config){
 				return true;
 			}
 			return false;
-		};
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	}
 	this.push = function(options){
 		/*
@@ -500,7 +466,7 @@ function Scene(config){
 		*/
 		var texture = options.name;
 		PIXI.loader.add(texture);
-		var event = function(){
+		insertEvent(function(){
 			if(that.video){
 				var source = that.video.texture.baseTexture.source;
 				if(source.ended){
@@ -516,10 +482,7 @@ function Scene(config){
 				that.stage.addChild(that.video);
 			}
 			return false;
-		};
-
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	}
 	this.change = function(options){
 		/*
@@ -530,11 +493,9 @@ function Scene(config){
 		}
 		*/
 		//TODO: transitions and clear
-		var event = function(){
+		insertEvent(function(){
 			that.nextScene = options.newScene;
-		};
-		that.events.splice(that.insertionPoint, 0, event);
-		that.insertionPoint++;
+		});
 	};
 };
 module.exports = Scene;
